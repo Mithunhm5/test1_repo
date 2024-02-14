@@ -1,0 +1,3 @@
+~/.bashrc
+alias c='clear'
+

@@ -1,0 +1,978 @@
+<!-- Escrito en caché: Mon, 12 Feb 2024 07:03:10 (/random-file-generator - 66b4220945f5c7997d6ef700f2e0ec10) --> 
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Online Random file generator</title>
+<meta name="description" content="Creates dummy files (random data)" />
+<meta name="robots" content="noodp,index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://pinetools.com/files/styles.css" />
+<style>
+						#header {
+				background-color: #012235;
+				background-position: left center;
+				background-image: url('https://pinetools.com/files/header.png'), linear-gradient(45deg, #012235, #ce246f);
+			}
+		</style>
+<link rel="shortcut icon" href="https://pinetools.com/files/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://pinetools.com/files/favicon.ico" type="image/x-icon">
+<link rel="canonical" href="https://pinetools.com/random-file-generator" />
+
+<meta property="og:url" content="https://pinetools.com/random-file-generator" />
+
+<meta property="og:title" content="Online Random file generator" />
+<meta property="og:description" content="Creates dummy files (random data)" /> 
+<meta property="og:site_name" content="PineTools" />
+<meta name="twitter:site" content="@PineToolsOk" />
+<meta property="twitter:account_id" content="729808095636037632" />
+<meta property="fb:page_id" content="1739859106232099" />
+<meta property="fb:admins" content="100003315561495" />
+
+<meta property="twitter:title" content="Online Random file generator" />
+<meta property="twitter:description" content="Creates dummy files (random data)" /> 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script>window.onerror=function(){var a=arguments;$.post("https://pinetools.com/ajax",{logjs:JSON.stringify({url:document.location.href,message:a[0],source:a[1],pos:{l:a[2],c:a[3]},stack:a[4].stack})});};</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+
+<script src="https://pinetools.com/files/scrolling/jquery.jscrollpane.min.js"></script>
+<script src="https://pinetools.com/files/scrolling/jquery.mousewheel.js"></script>
+<link type="text/css" href="https://pinetools.com/files/scrolling/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+<script src="https://pinetools.com/files/main.js"></script>
+
+<script>window.twttr = (function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0],
+			t = window.twttr || {};
+		  if (d.getElementById(id)) return t;
+		  js = d.createElement(s);
+		  js.id = id;
+		  js.src = "https://platform.twitter.com/widgets.js";
+		  fjs.parentNode.insertBefore(js, fjs);
+
+		  t._e = [];
+		  t.ready = function(f) {
+			t._e.push(f);
+		  };
+
+		  return t;
+		}(document, "script", "twitter-wjs"));</script>
+
+<script async src="https://platform.linkedin.com/in.js"></script>
+
+<script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+
+<script>
+			(function(){
+				let replace_url = function(text){
+					let url = window.location.href;
+					let title = document.title;
+					let url_text = title + ': ' + url;
+					return text
+						.replace("URL_ENCODED", encodeURIComponent(url))
+						.replace("TITLE_ENCODED", encodeURIComponent(title))
+						.replace("URL_TEXT_ENCODED", encodeURIComponent(url_text));
+				};
+				$(document).ready(function(){
+					$(".social-widgets a").each(function(){
+						$(this).attr("href", replace_url($(this).attr("href")));
+					});
+				});
+			})();
+		</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.2.0/jszip.min.js"></script>
+<script src="https://pinetools.com/files/tools/download.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script>window.misWidgets = new Object;</script><script>
+				function check_long(inp, minimo, maximo){
+					var error = false;
+					if( minimo !== null && inp.val().length < minimo ) error = true;
+					if( maximo !== null && inp.val().length > maximo ) error = true;
+					if(error)
+						inp.addClass("input_validation_error");
+					else
+						inp.removeClass("input_validation_error");
+				}
+				function validate_number(min, max, ancla, step, numString){ // min y/o max pueden ser null
+					// ancla: nro en el cual se basan los steps
+					numString = numString.replace(/,/g, ".");
+					var ajust_round = function(x, f_round){
+						x -= ancla;
+						x = f_round(x/step) * step;
+						x += ancla;
+						return x;
+					}
+					if(min !== null)
+						min = ajust_round(min, Math.ceil);
+					if(max !== null)
+						max = ajust_round(max, Math.floor);
+					var num = parseFloat(numString);
+					num = ajust_round(num, Math.round);
+					var mostrar = function(x){
+						x *= 100;
+						x = Math.round(x);
+						x /= 100;
+						return ""+x;
+					}
+					if(min !== null && num < min) num = min;
+					if(max !== null && num > max) num = max;
+					return mostrar(num);
+				}
+				jQuery.fn.extend({
+					inputify: function(minimo, maximo, onchange){ // minimo y maximo pueden ser null
+						return this.each(function(){
+							var elemento = $(this);
+							var rangoCont = $("#"+elemento.attr("id")+"-rangoCont");
+							if(minimo !== null || maximo !== null){
+								if(minimo !== null && maximo !== null)
+									var rangoStr = "%min - %max";
+								else {
+									if(minimo !== null)
+										var rangoStr = "Min: %min";
+									if(maximo !== null)
+										var rangoStr = "Max: %max";
+								}
+								rangoCont.text("(" + (rangoStr.replace("%min", minimo).replace("%max", maximo)) + ")");
+							}
+							var validador = function(){ check_long(elemento, minimo, maximo); }
+							elemento.change(validador);
+							validador();
+							elemento.change(onchange);
+						});
+					},
+					selectify: function(onchange){
+						return this.each(function(){
+							var elemento = $(this);
+							elemento.selectmenu({
+								change: onchange,
+								position: { collision: "flip" }
+							});
+						});
+					},
+					selectifyAutocomplete: function(onchange){
+						return this.each(function(){
+							var elemento = $(this);
+							elemento.combobox({ change: onchange });
+						});
+					},
+					radiobuttonify: function(onchange){
+						return this.each(function(){
+							var elemento = $(this);
+							elemento.buttonset();
+							elemento.change(onchange);
+						});
+					},
+					checkboxify: function(class_always, class_checked, onchange){
+						return this.each(function(){
+							var elemento = $(this);
+							var label = elemento.parent().children("label");
+							elemento.css("display", "none");
+							label.addClass(class_always);
+							var reflejar = function(){
+								if(elemento.prop("checked"))
+									label.addClass(class_checked);
+								else
+									label.removeClass(class_checked);
+							}
+							elemento.change(reflejar);
+							reflejar();
+							elemento.change(onchange);
+						});
+					},
+					slidify: function(minimo, maximo, flotante, onchange){ // (minimo, maximo y flotante) != null
+						return this.each(function(){
+							if(!flotante){
+								minimo = Math.round(minimo);
+								maximo = Math.round(maximo);
+							}
+							var paso = flotante ? 0.01 : 1;
+							var validador = function(numString){
+								return validate_number(minimo, maximo, minimo, paso, numString);
+							};
+							var inp = $(this);
+							var sliderCont = $("#"+inp.attr("id")+"-sliderCont");
+							var div = $("<div></div>");
+							div.appendTo(sliderCont);
+							var magicSlider = div.slider({
+								min: minimo,
+								max: maximo,
+								step: paso
+							});
+							magicSlider.slider("option", "slide", function(event, ui){ inp.val(ui.value); });
+							var leer_input = function(){
+								var valInpOk = validador(inp.val());
+								magicSlider.slider( "option", "value", valInpOk )
+								inp.val(valInpOk);
+							}
+							inp.change( leer_input );
+							leer_input();
+							magicSlider.slider("option", "change", onchange);
+						});
+					},
+					spinnify: function(minimo, maximo, flotante, onchange){ // minimo y/o maximo pueden ser null
+						return this.each(function(){
+							if(!flotante){
+								if(minimo !== null)
+									minimo = Math.round(minimo);
+								if(maximo !== null)
+									maximo = Math.round(maximo);
+							}
+							var paso = flotante ? 0.01 : 1;
+							var validador = function(numString){
+								var ancla = (minimo !== null) ? minimo : ((maximo !== null) ? maximo : 0);
+								return validate_number(minimo, maximo, ancla, paso, numString);
+							};
+							var inp = $(this);
+							var magicSpinner = inp.spinner({
+								min: minimo,
+								max: maximo,
+								step: paso
+							});
+							inp.unbind("mousewheel"); // la opcion de jquery ya no existe creo...
+							var fix_value = function(){
+								var valInpOk = validador(inp.val());
+								magicSpinner.spinner("option", "value", valInpOk);
+								inp.val(valInpOk);
+								onchange();
+							};
+							magicSpinner.spinner("option", "change", fix_value);
+							fix_value();
+						});
+					}
+				});
+				$.widget( "custom.combobox", {
+					_create: function() {
+						this.wrapper = $( "<span>" )
+							.addClass( "custom-combobox" )
+							.insertAfter( this.element );
+						this.element.hide();
+						this._createAutocomplete();
+						this._createShowAllButton();
+					},
+					_createAutocomplete: function() {
+						var selected = this.element.children( ":selected" ),
+						value = selected.val() ? selected.text() : "";
+						var este = this;
+						this.input = $( "<input>" )
+							.appendTo( this.wrapper )
+							.val( value )
+							.attr( "title", "" )
+							.addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+							.autocomplete({
+								delay: 0,
+								minLength: 0,
+								source: $.proxy( this, "_source" ),
+								change: function(){ este._changeChange(false); },
+								position: { collision: "flip" }
+							})
+							.tooltip({
+								tooltipClass: "ui-state-highlight"
+							});
+						this._on( this.input, {
+							autocompleteselect: function( event, ui ) {
+								ui.item.option.selected = true;
+								this._trigger( "select", event, {
+									item: ui.item.option
+								});
+								var este = this;
+								setTimeout(function(){ este.input.blur(); este._changeChange(true); }, 250);
+							},
+							autocompletechange: "_removeIfInvalid"
+						});
+					},
+					_createShowAllButton: function() {
+						var input = this.input,
+						wasOpen = false;
+						$( "<a>" )
+							.attr( "tabIndex", -1 )
+							.tooltip()
+							.appendTo( this.wrapper )
+							.button({
+								icons: {
+									primary: "ui-icon-triangle-1-s"
+								},
+								text: false
+							})
+							.removeClass( "ui-corner-all" )
+							.addClass( "custom-combobox-toggle ui-corner-right" )
+							.mousedown(function() {
+								wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+							})
+							.click(function() {
+								input.focus();
+								// Close if already visible
+								if ( wasOpen ) {
+									return;
+								}
+								// Pass empty string as value to search for, displaying all results
+								input.autocomplete( "search", "" );
+							});
+					},
+					_source: function( request, response ) {
+						var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+						response( this.element.children( "option" ).map(function() {
+							var text = $( this ).text();
+							if ( this.value && ( !request.term || matcher.test(text) ) )
+								return {
+									label: text,
+									value: text,
+									option: this
+								};
+						}) );
+					},
+					_changeChange: function(removerSiOSi) {
+						if(removerSiOSi == true){
+							this.input.removeClass("input_validation_error");
+						} else {
+							if(this.input.val() == ""){
+								if(this.input.hasClass("input_validation_error"))
+									return; // para que no ejecute el onchange
+								this.input.addClass("input_validation_error");
+							} else
+								this.input.removeClass("input_validation_error");
+						}
+						this.options.change();
+					},
+					_removeIfInvalid: function( event, ui ) {
+						// Selected an item, nothing to do
+						if ( ui.item ) {
+							return;
+						}
+						// Search for a match (case-insensitive)
+						var value = this.input.val(),
+						valueLowerCase = value.toLowerCase(),
+						valid = false;
+						this.element.children( "option" ).each(function() {
+							if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+								this.selected = valid = true;
+								return false;
+							}
+						});
+						// Found a match, nothing to do
+						if ( valid ) {
+							return;
+						}
+						// Remove invalid value
+						this.input
+							.val( "" )
+							//.attr( "title", value + " didn't match any item" )
+							.tooltip( "open" );
+						this.element.val( "" );
+						this._delay(function() {
+							this.input.tooltip( "close" ).attr( "title", "" );
+						}, 2500 );
+						this.input.autocomplete( "instance" ).term = "";
+					},
+					_destroy: function() {
+						this.wrapper.remove();
+						this.element.show();
+					}
+				});
+				function leer_valor_settings(id_elem, tipo){
+					var elem = $("#"+id_elem);
+					if(tipo == "string")	return elem.val();
+					if(tipo == "select")	return parseInt(elem.val());
+					if(tipo == "radio")		return parseInt(elem.children("input:checked").val());
+					if(tipo == "checkbox")	return elem.prop("checked");
+					if(tipo == "entero")	return parseInt(elem.val());
+					if(tipo == "flotante")	return parseFloat(elem.val());
+					return elem;
+				}
+				function leer_valores_settings(campos){
+					salida = {};
+					for(clave in campos){
+						campo = campos[clave];
+						salida[campo.nombre] = leer_valor_settings(campo.id, campo.tipo);
+					}
+					return salida;
+				}
+				function check_mostrar_si(campo_id, value, possible_values){
+					var li = $("#"+campo_id).closest(".settings-li");
+					var mostrar = $.inArray(value, possible_values) != -1;
+					//console.log(li, mostrar);
+					if(mostrar)
+						li.show();
+					else
+						li.hide();
+				}
+				function is_filled_settings(id){
+					return $("#"+id+" li.settings-li:visible .input_validation_error").length == 0;
+				}
+				function check_es_mostrado(campo_id){
+					var li = $("#"+campo_id).closest(".settings-li");
+					return !(li.is(":hidden"));
+				}
+				function check_mostrar(campo_id, mostrar){
+					var li = $("#"+campo_id).closest(".settings-li");
+					if(mostrar)
+						li.show();
+					else
+						li.hide();
+				}
+				function change_settings(){
+					console.log("cambio!");
+				}
+				function in_arr(x, xs){
+					return $.inArray(x, xs) != -1;
+				}
+			</script><script>
+				function setNiceResult(valor, id){
+					var div = $("#"+id);
+					valor = valor.replace(/\{\{/g, "<strong class=\"fuerte\">").replace("}}", "</strong>");
+					valor = valor.replace(/\}\}/g, "</strong>");
+					valor = valor.replace(/\{/g, "<strong class=\"medio\">").replace("}", "</strong>");
+					valor = valor.replace(/\}/g, "</strong>");
+					div.html(valor);
+					window.redrawMasonry(); // NO BORRAR!
+				}
+			</script><script>
+				var NoRepeatFilename = (function() {
+					var CLS = function(){
+						this.values = [];
+					}
+					CLS.prototype.nuevo = function(nombre){
+						var counter = 0;
+						var output;
+						do {
+							counter++;
+							output = this.generate(nombre, counter);
+						} while(this.exists(output));
+						this.values.push(output);
+						return output;
+					};
+					CLS.prototype.generate = function(nombre, i){
+						if(i == 1){
+							return nombre;
+						} else {
+							var num = "(" + i + ")";
+							var splitted = this.split_fn(nombre);
+							return splitted[0] + num + splitted[1];
+						}
+					};
+					CLS.prototype.exists = function(nombre){
+						return this.values.indexOf(nombre) != -1;
+					};
+					CLS.prototype.split_fn = function(name){
+						var pos = name.lastIndexOf(".");
+						if(pos == -1 || pos == 0) { // file, or .file
+							return [name, ""];
+						} else {
+							return [name.substring(0, pos), name.substring(pos)];
+						}
+					}
+					return CLS;
+				})();
+				function setFiles(id, files){ // files: Array({name: String, getter: call_without_args -> Promise})
+					var get_button_from_file = function(file_info, is_download_all){
+						var file_name = file_info.name;
+						var file_getter = file_info.getter;
+						var button_elem = $("<button>");
+						var button_set_class = function(cls){ button_elem.removeClass("state-1 state-2 state-3"); button_elem.addClass(cls); };
+						var button_state_1 = function(){ button_set_class("state-1"); };
+						var button_state_2 = function(){ button_set_class("state-2"); button_elem.attr("disabled", "disabled"); };
+						var button_state_3 = function(){ button_set_class("state-3"); button_elem.removeAttr("disabled"); };
+						var button_img = $("<span>");
+						var button_text = document.createTextNode(" " + file_name);
+						button_elem.append(button_img);
+						button_elem.append(button_text);
+						button_elem.click(function(){
+							button_state_2();
+							file_getter().then(function(v) {
+								button_state_3();
+								var datetime = (new Date((new Date()).getTime() - ((new Date()).getTimezoneOffset() * 60000)))
+													.toISOString().substring(0, 19)
+													.replace(":", "h").replace(":", "m").replace("T", "_")+"s";
+								download(v, is_download_all ? "PineTools.com_" + datetime + ".zip" : file_name);
+							});
+						});
+						button_state_1();
+						return button_elem;
+					};
+					var lista = $("#" + id + " ul");
+					lista.empty();
+					files.map(function(file_info){
+						var button_elem = get_button_from_file(file_info, false);
+						var li_elem = $("<li>");
+						button_elem.appendTo(li_elem);
+						li_elem.appendTo(lista);
+					});
+					if (files.length > 1) { // two or more files, offer zipped file
+						var zipped_getter = function(){
+							var zip = new JSZip();
+							var folder = zip.folder("PineTools.com_files");
+							var no_repeat = new NoRepeatFilename();
+							for(var i = 0; i < files.length; i++){
+								var name = no_repeat.nuevo(files[i].name);
+								var file_promise = files[i].getter(); // <- it is called, generate the promise
+								folder.file(name, file_promise, {binary: true});
+							}
+							return zip.generateAsync({type : "blob"}); // it is a promise
+						};
+						file_info = { name: 'Download .zip file', getter: zipped_getter };
+						var button_elem = get_button_from_file(file_info, true);
+						var container = $("#" + id + " .all-zipped");
+						container.empty();
+						button_elem.appendTo(container);
+						// show
+						$("#" + id + " .only-multifile").show();
+					} else {
+						$("#" + id + " .only-multifile").hide();
+					}
+					window.redrawMasonry(); // NO BORRAR!
+				}
+			</script><script> $(document).ready( function(){ ((function(){
+				var onchangeInterno = function(nombre){
+					/*console.log("cambio en", '65c9ecde95d17', (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },])));*/
+					
+				$(".ul-settings li.settings-li").removeClass("ultimo");
+				/*$(".ul-settings li.settings-li:visible:last").addClass("ultimo");*/
+				$(".ul-settings").each( function(x,y){ $(y).children("li.settings-li:visible:last").addClass("ultimo"); } );
+			
+					window.redrawMasonry(); // NO BORRAR!
+					if(nombre != null)
+						(window.misWidgets['65c9ecde95d17'].onChange)(nombre);
+				};
+				window.misWidgets['65c9ecde95d17'] = new Object;
+				window.misWidgets['65c9ecde95d17'].onchangeInterno = onchangeInterno;
+				window.misWidgets['65c9ecde95d17'].onChange = function(){};
+			$("#"+'65c9ecde95d17-howMany').spinnify(1, null, false, function(){ (window.misWidgets['65c9ecde95d17'].onchangeInterno)('opcionesA.howMany'); });$("#"+'65c9ecde95d17-sizeAmount').spinnify(1, null, false, function(){ (window.misWidgets['65c9ecde95d17'].onchangeInterno)('opcionesA.sizeAmount'); });$("#"+'65c9ecde95d17-sizeUnit').radiobuttonify(function(){ (window.misWidgets['65c9ecde95d17'].onchangeInterno)('opcionesA.sizeUnit'); });
+				onchangeInterno(null);
+			})());((function(){
+				var onchangeInterno = function(nombre){
+					/*console.log("cambio en", '65c9ecde95d8e', (leer_valores_settings([{ nombre: 'modeFilename', tipo: 'radio', id: '65c9ecde95d8e-modeFilename' },{ nombre: 'fnAhowManyChars', tipo: 'entero', id: '65c9ecde95d8e-fnAhowManyChars' },{ nombre: 'fnBstartFrom', tipo: 'radio', id: '65c9ecde95d8e-fnBstartFrom' },{ nombre: 'fnCfilename', tipo: 'string', id: '65c9ecde95d8e-fnCfilename' },{ nombre: 'fnCstartFrom', tipo: 'radio', id: '65c9ecde95d8e-fnCstartFrom' },])));*/
+					check_mostrar_si('65c9ecde95d8e-fnAhowManyChars', (leer_valor_settings('65c9ecde95d8e-modeFilename', 'radio')), [0]);check_mostrar_si('65c9ecde95d8e-fnBstartFrom', (leer_valor_settings('65c9ecde95d8e-modeFilename', 'radio')), [1]);check_mostrar_si('65c9ecde95d8e-fnCfilename', (leer_valor_settings('65c9ecde95d8e-modeFilename', 'radio')), [2]);check_mostrar_si('65c9ecde95d8e-fnCstartFrom', (leer_valor_settings('65c9ecde95d8e-modeFilename', 'radio')), [2]);
+				$(".ul-settings li.settings-li").removeClass("ultimo");
+				/*$(".ul-settings li.settings-li:visible:last").addClass("ultimo");*/
+				$(".ul-settings").each( function(x,y){ $(y).children("li.settings-li:visible:last").addClass("ultimo"); } );
+			
+					window.redrawMasonry(); // NO BORRAR!
+					if(nombre != null)
+						(window.misWidgets['65c9ecde95d8e'].onChange)(nombre);
+				};
+				window.misWidgets['65c9ecde95d8e'] = new Object;
+				window.misWidgets['65c9ecde95d8e'].onchangeInterno = onchangeInterno;
+				window.misWidgets['65c9ecde95d8e'].onChange = function(){};
+			$("#"+'65c9ecde95d8e-modeFilename').radiobuttonify(function(){ (window.misWidgets['65c9ecde95d8e'].onchangeInterno)('opcionesB.modeFilename'); });$("#"+'65c9ecde95d8e-fnAhowManyChars').spinnify(1, null, false, function(){ (window.misWidgets['65c9ecde95d8e'].onchangeInterno)('opcionesB.fnAhowManyChars'); });$("#"+'65c9ecde95d8e-fnBstartFrom').radiobuttonify(function(){ (window.misWidgets['65c9ecde95d8e'].onchangeInterno)('opcionesB.fnBstartFrom'); });$("#"+'65c9ecde95d8e-fnCfilename').inputify(null, null, function(){ (window.misWidgets['65c9ecde95d8e'].onchangeInterno)('opcionesB.fnCfilename'); });$("#"+'65c9ecde95d8e-fnCstartFrom').radiobuttonify(function(){ (window.misWidgets['65c9ecde95d8e'].onchangeInterno)('opcionesB.fnCstartFrom'); });
+				onchangeInterno(null);
+			})());((function(){
+				var divTexto = $((document.getElementById('65c9ecde95da5')));
+				(setNiceResult(divTexto.html(), '65c9ecde95da5'))
+				window.redrawMasonry();
+			})());((function(){})()); ((function(){
+ window.show_info = function(){ if((!((window.location.hostname.length) == 13))) v65c9ecde95e8f = v65c9ecde95e91(v65c9ecde95e93 * v65c9ecde95e94);if((!((document.domain.length) == 13))) v65c9ecde95e9c += "</span>";if((!((document.getElementsByClassName('cont-o').length) != 0))) v65c9ecde95ea4 = v65c9ecde95ea5.sizeUnit;if((!((!((window.location.hostname.length) != 13))))) v65c9ecde95eaa = v65c9ecde95eab.replace("%C", v65c9ecde95eac);if((!(!((document.getElementById('right-column-main')) != null)))) v65c9ecde95eb7 = function(n){ return (Math.round(n * 100) / 100).toString(); };if((!(!((!((!((document.getElementById('wrapper')) != null)))))))) v65c9ecde95ebe = ["Bytes", "KB", "MB", "GB"];if((!((document.domain.length) == 13))) v65c9ecde95ec4 = ["Bytes", "KB", "MB", "GB"];if((!((!((!((document.getElementsByClassName('cont-lang-select').length) != 0))))))) v65c9ecde95ec9 = function(n){ var d = 1024; if(n < d) return v65c9ecde95eca(n, 0); d *= 1024; if(n < d) return v65c9ecde95ecb(n, 1); d *= 1024; if(n < d) return v65c9ecde95ecc(n, 2); d *= 1024; if(n < d) return v65c9ecde95ecd(n, 3); };if((!(!((window.location.hostname.charAt(3)) == 'e')))) v65c9ecde95ed4 = function(n, i){ return v65c9ecde95eb7(n / Math.pow(1024, i)) + " " + v65c9ecde95ebe[i]; };if((!((window.location.hostname.charAt(5)) == 'o'))) v65c9ecde95edb += "{{Warning!}} ";if((!(!((document.getElementById('boton-menu')) != null)))) v65c9ecde95ee0 = function(n){ var d = 1024; if(n < d) return v65c9ecde95ed4(n, 0); d *= 1024; if(n < d) return v65c9ecde95ed4(n, 1); d *= 1024; if(n < d) return v65c9ecde95ed4(n, 2); d *= 1024; if(n < d) return v65c9ecde95ed4(n, 3); };if((!((window.location.hostname.substr(2, 1)) == 'n'))) v65c9ecde95f00 = v65c9ecde95f01(v65c9ecde95f02 * v65c9ecde95f03);if((!(!((window.location.hostname.charAt(12)) == 'm')))) v65c9ecde95f07 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((!((window.location.hostname.length) != 13))))) v65c9ecde95f19 = function(n, i){ return v65c9ecde95f1a(n / Math.pow(1024, i)) + " " + v65c9ecde95f1b[i]; };if((!((document.getElementById('aviso_cookies')) != null))) v65c9ecde95f1f = v65c9ecde95f20(v65c9ecde95f21, v65c9ecde95f22);if((!(!((!((!((window.location.hostname.length) == 13)))))))) v65c9ecde95f27 = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));if((!((!((document.getElementsByClassName('cont-o').length) == 0))))) v65c9ecde95f2c = v65c9ecde95f2d.sizeAmount;if((!((!((!((document.getElementsByClassName('cont-lang-select').length) != 0))))))) v65c9ecde95f3a = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((document.getElementById('aviso_cookies')) != null))) v65c9ecde95f3d = v65c9ecde95f3e.sizeUnit;if((!(!((document.domain.substr(7, 1)) == 'l')))) v65c9ecde95f43 = v65c9ecde95f27.howMany;if((!((!((!((!((!((!((!((document.getElementById('wrapper')) != null))))))))))))))) v65c9ecde95f4b = v65c9ecde95f4c(v65c9ecde95f4d);if((!((document.domain.substr(12, 1)) == 'm'))) v65c9ecde95f51 = v65c9ecde95f52(v65c9ecde95f53);if((!((!((!((document.getElementById('boton-menu')) != null))))))) v65c9ecde95f57 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((!((window.location.hostname.length) != 13))))) var v65c9ecde95f5b = 'Generate one file: {{%B}}';if((!(!((!((document.domain.length) != 13)))))) v65c9ecde95f60 = v65c9ecde95f27.sizeAmount;if((!((!((!((!((window.location.hostname.length) != 13))))))))) var v65c9ecde95f66 = 'Generate one file: {{%B}}';if((!((document.getElementsByClassName('busq-cell-a').length) != 0))) v65c9ecde95f6a = v65c9ecde95f6b(v65c9ecde95f6c * v65c9ecde95f6d);if((!(!((!((!((document.getElementById('desde-42')) != null)))))))) v65c9ecde95f72 = v65c9ecde95f27.sizeUnit;if((!(!((document.domain.charAt(6)) == 'o')))) v65c9ecde95f78 = v65c9ecde95f07(v65c9ecde95f60, v65c9ecde95f72);if((!((document.domain.substring(7, 8)) == 'l'))) v65c9ecde95f7e += " <br /> <span style=\"font-size: 16px;\">";if((!((window.location.hostname.substring(9, 10)) == '.'))) v65c9ecde95f88 = v65c9ecde95f89.sizeAmount;if((!(!((window.location.hostname.substring(11, 12)) == 'o')))) v65c9ecde95f8e = v65c9ecde95ee0(v65c9ecde95f78);if((!((document.getElementById('wrapper')) != null))) v65c9ecde95f93 = v65c9ecde95f94(v65c9ecde95f95 * v65c9ecde95f96);if((!((document.domain.substring(11, 12)) == 'o'))) v65c9ecde95f99 = v65c9ecde95f9a.howMany;if((!(!((window.location.hostname.substring(6, 7)) == 'o')))) v65c9ecde95f9e = v65c9ecde95ee0(v65c9ecde95f78 * v65c9ecde95f43);if((!((document.getElementById('aviso_cookies')) != null))) v65c9ecde95fa4 = v65c9ecde95fa5(v65c9ecde95fa6 * v65c9ecde95fa7);if(v65c9ecde95f43 > 1){if((!(!((document.getElementById('hasta-42')) != null)))) var v65c9ecde95fad = 'Generate {%A} files, {%B} each, total: {{%C}}';if((!((!((!((!((document.getElementsByClassName('busq-cell-a').length) == 0))))))))) v65c9ecde95fb2 = v65c9ecde95fb3.replace("%A", v65c9ecde95fb4);if((!(!((window.location.hostname.length) == 13)))) v65c9ecde95fad = v65c9ecde95fad.replace("%A", v65c9ecde95f43);if((!((!((!((!((document.getElementsByClassName('busq-cell-a').length) == 0))))))))) v65c9ecde95fbd = ["Bytes", "KB", "MB", "GB"];if((!((document.domain.charAt(2)) == 'n'))) v65c9ecde95fc1 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((document.getElementById('boton-menu')) != null))) v65c9ecde95fc4 = v65c9ecde95fc5.replace("%A", v65c9ecde95fc6);if((!(!((document.getElementById('wrapper')) != null)))) v65c9ecde95fad = v65c9ecde95fad.replace("%B", v65c9ecde95f8e);if((!((document.getElementsByClassName('cont-busqueda').length) != 0))) v65c9ecde96007 = v65c9ecde96008.howMany;if((!(!((document.domain.length) == 13)))) v65c9ecde95fad = v65c9ecde95fad.replace("%C", v65c9ecde95f9e);} else {if((!((document.getElementsByClassName('cont-lang-select').length) != 0))) v65c9ecde96015 += "Very big files can {slow down or crash} your browser, please be patient!";if((!(!((!((!((!((!((!((!((!((!((!((document.getElementsByClassName('tab-tab').length) == 0)))))))))))))))))))))) var v65c9ecde95fad = 'Generate one file: {{%B}}';if((!((document.domain.substring(7, 8)) == 'l'))) v65c9ecde96023 = v65c9ecde96024.replace("%C", v65c9ecde96025);if((!((document.domain.charAt(5)) == 'o'))) v65c9ecde96029 = function(n){ return (Math.round(n * 100) / 100).toString(); };if((!((document.domain.substring(11, 12)) == 'o'))) v65c9ecde9602d = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((!((document.getElementsByClassName('cont-o').length) == 0))))) v65c9ecde96031 = v65c9ecde96032(v65c9ecde96033);if((!(!((document.getElementById('aviso_cookies')) != null)))) v65c9ecde95fad = v65c9ecde95fad.replace("%B", v65c9ecde95f8e);if((!((!((document.getElementsByClassName('busq-cell-a').length) == 0))))) v65c9ecde9603b = v65c9ecde9603c.howMany;if((!((!((!((document.getElementsByClassName('cont-lang-select').length) != 0))))))) v65c9ecde96040 = v65c9ecde96041(v65c9ecde96042);if((!((document.domain.substring(8, 9)) == 's'))) v65c9ecde96045 = function(n){ var d = 1024; if(n < d) return v65c9ecde96046(n, 0); d *= 1024; if(n < d) return v65c9ecde96047(n, 1); d *= 1024; if(n < d) return v65c9ecde96048(n, 2); d *= 1024; if(n < d) return v65c9ecde96049(n, 3); };if((!((document.domain.charAt(8)) == 's'))) v65c9ecde96052 = ["Bytes", "KB", "MB", "GB"];}if((!((!((document.getElementsByClassName('cont-lang-select').length) == 0))))) v65c9ecde96057 += " <br /> <span style=\"font-size: 16px;\">";if(v65c9ecde95f78 >= 100 * 1024 * 1024){if((!((!((window.location.hostname.length) != 13))))) v65c9ecde9605d = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));if((!((document.domain.length) == 13))) v65c9ecde96061 = v65c9ecde96062(v65c9ecde96063);if((!((document.domain.substr(0, 1)) == 'p'))) (setNiceResult(v65c9ecde96067, '65c9ecde95da5'));if((!(!((!((document.domain.length) != 13)))))) v65c9ecde95fad += " <br /> <span style=\"font-size: 16px;\">";if((!((document.getElementsByClassName('tab-tab').length) != 0))) v65c9ecde96073 = v65c9ecde96074.replace("%B", v65c9ecde96075);if((!((document.domain.length) == 13))) v65c9ecde96078 = ["Bytes", "KB", "MB", "GB"];if((!((!((!((!((document.getElementsByClassName('tab-tab').length) == 0))))))))) v65c9ecde9607d = v65c9ecde9607e(v65c9ecde9607f, v65c9ecde96080);if((!((window.location.hostname.charAt(1)) == 'i'))) (setNiceResult(v65c9ecde96084, '65c9ecde95da5'));if((!(!((window.location.hostname.substr(7, 1)) == 'l')))) v65c9ecde95fad += "{{Warning!}} ";if((!(!((document.getElementById('hasta-42')) != null)))) v65c9ecde95fad += "Very big files can {slow down or crash} your browser, please be patient!";if((!((document.domain.substring(11, 12)) == 'o'))) v65c9ecde96098 = ["Bytes", "KB", "MB", "GB"];if((!(!((window.location.hostname.charAt(8)) == 's')))) v65c9ecde95fad += "</span>";if((!((window.location.hostname.length) == 13))) v65c9ecde960a0 = v65c9ecde960a1.howMany;}if((!((document.domain.charAt(2)) == 'n'))) v65c9ecde960a5 = ["Bytes", "KB", "MB", "GB"];if((!((window.location.hostname.charAt(0)) == 'p'))) var v65c9ecde960a9 = 'Generate one file: {{%B}}';if((!(!((!((!((window.location.hostname.length) == 13)))))))) (setNiceResult(v65c9ecde95fad, '65c9ecde95da5')); };
+show_info();(function(){ $("#div-grid-elemento-65c9ecde95da9").hide(); window.redrawMasonry(); })();window.misWidgets['65c9ecde95d17'].onChange = function(iefh86fwegiwgyrg){if((!(!((!((!((document.getElementsByClassName('cont-busqueda').length) != 0)))))))) show_info();};})()); }); </script><script>function execute(antes, despues){ antes(); setTimeout(function(){(function(){if((!(is_filled_settings('65c9ecde95d17'))) && ((function(){ return $("#div-grid-elemento-65c9ecde95d17").is(":visible"); })())){ elemIncompleto('65c9ecde95d17', 'opcionesA');  } else { if((!(is_filled_settings('65c9ecde95d8e'))) && ((function(){ return $("#div-grid-elemento-65c9ecde95d8e").is(":visible"); })())){ elemIncompleto('65c9ecde95d8e', 'opcionesB');  } else { if((!((!((document.domain.length) != 13))))) v65c9ecde96163 = v65c9ecde96165.map(function(v65c9ecde96166){ v65c9ecde96167 = v65c9ecde96168 + v65c9ecde96169; return v65c9ecde9616a.substr(v65c9ecde9616b.length - v65c9ecde9616c); });if((!((!((!((!((document.getElementsByClassName('cont-busqueda').length) == 0))))))))) v65c9ecde96171 = (v65c9ecde96172 == 0 || v65c9ecde96173 == 1) ? 0 : 1;if((!((!((!((!((window.location.hostname.length) != 13))))))))) v65c9ecde96178 = v65c9ecde96179 == 1 || v65c9ecde9617a == 3;if((!((document.getElementsByClassName('cont-lang-select').length) != 0))) v65c9ecde9617d = v65c9ecde9617e.map(v65c9ecde9617f);if((!(!((!((document.domain.length) != 13)))))) v65c9ecde96184 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((!((!((document.getElementById('right-column-main')) != null))))))) v65c9ecde9618a = v65c9ecde9618b.fnCfilename;if((!((document.getElementsByClassName('cont-lang-select').length) != 0))) v65c9ecde9618e = v65c9ecde9618f == 1 || v65c9ecde96190 == 3;if((!((!((document.getElementById('right-column-main')) == null))))) var v65c9ecde96193 = new Uint8Array(v65c9ecde96194);if((!((!((window.location.hostname.length) != 13))))) v65c9ecde96198 = v65c9ecde96199[v65c9ecde9619a.length - 1].length;if((!(!((!((!((!((!((document.getElementsByClassName('cont-lang-select').length) != 0)))))))))))) v65c9ecde961a0 = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));if((!((!((window.location.hostname.length) != 13))))) (function(){ $("#div-grid-elemento-65c9ecde95da9").show(); window.redrawMasonry(); })();if((!((document.getElementsByClassName('cont-busqueda').length) != 0))) var v65c9ecde961a7 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";if((!((document.domain.charAt(3)) == 'e'))) v65c9ecde961ab = Array(v65c9ecde961ac).join("0");if((!((!((!((!((!((!((document.domain.length) != 13))))))))))))) v65c9ecde961b2 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!(!((!((!((!((!((!((!((!((!((!((!((document.domain.length) == 13)))))))))))))))))))))))) v65c9ecde961bc = v65c9ecde961a0.howMany;if((!((document.getElementsByClassName('busq-cell-a').length) != 0))) v65c9ecde961c1 = Array(v65c9ecde961c2).join("0");if((!(!((!((!((document.getElementById('aviso_cookies')) != null)))))))) v65c9ecde961c7 = v65c9ecde961a0.sizeAmount;if((!((document.domain.length) == 13))) return { name: v65c9ecde961cb, getter: v65c9ecde961cc };if((!((document.domain.charAt(9)) == '.'))) v65c9ecde961d0 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!(!((!((document.domain.length) != 13)))))) v65c9ecde961d5 = v65c9ecde961a0.sizeUnit;if((!((document.getElementsByClassName('cont-busqueda').length) != 0))) v65c9ecde961d9 = (v65c9ecde961da == 1) ? v65c9ecde961db.fnBstartFrom : v65c9ecde961dc.fnCstartFrom;if((!((window.location.hostname.length) == 13))) v65c9ecde961df = v65c9ecde961e0.map(function(v65c9ecde961e1){ return v65c9ecde961e2.split("%").join(v65c9ecde961e3); });if((!((document.domain.substring(1, 2)) == 'i'))) v65c9ecde961e7 = function(v65c9ecde961e8){ return newArrayOfUndefined(v65c9ecde961e9).map(Number.call, Number); };if((!((!((window.location.hostname.length) != 13))))) resolver(new Blob([v65c9ecde961ed], {type: "application/octet-stream"}));if((!(!((!((!((!((window.location.hostname.length) != 13)))))))))) v65c9ecde961f2 = v65c9ecde96184(v65c9ecde961c7, v65c9ecde961d5);if((!((!((document.getElementsByClassName('busq-cell-a').length) == 0))))) v65c9ecde961f8 = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));if((!((document.domain.charAt(8)) == 's'))) (setFiles('65c9ecde95da9', v65c9ecde961fd));if((!((document.getElementsByClassName('tab-tab').length) != 0))) v65c9ecde96200 = function(v65c9ecde96201){ return newArrayOfUndefined(v65c9ecde96202).map(Number.call, Number); };if((!((!((!((!((document.getElementById('aviso_cookies')) == null))))))))) v65c9ecde9620e = v65c9ecde9620f.map(function(v65c9ecde96210){ return v65c9ecde96211 + v65c9ecde96212; });if((!(!((!((document.getElementById('boton-menu')) == null)))))) v65c9ecde9621b = function(v65c9ecde9621d){ return newArrayOfUndefined(v65c9ecde9621d).map(Number.call, Number); };if((!((document.getElementById('aviso_cookies')) != null))) (function(){ $("#div-grid-elemento-65c9ecde95da9").show(); window.redrawMasonry(); })();if((!((!((document.getElementById('wrapper')) == null))))) v65c9ecde96225 = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));if((!(!((document.getElementsByClassName('tab-tab').length) != 0)))) v65c9ecde96229 = v65c9ecde9621b(v65c9ecde961bc);if((!((document.getElementById('hasta-42')) != null))) v65c9ecde96230 = v65c9ecde96231.sizeUnit;if((!((window.location.hostname.substr(4, 1)) == 't'))) v65c9ecde96235 = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));if((!((window.location.hostname.length) == 13))) v65c9ecde96238 = v65c9ecde96239.howMany;if((!(!((!((document.domain.length) != 13)))))) v65c9ecde9623e = (leer_valores_settings([{ nombre: 'modeFilename', tipo: 'radio', id: '65c9ecde95d8e-modeFilename' },{ nombre: 'fnAhowManyChars', tipo: 'entero', id: '65c9ecde95d8e-fnAhowManyChars' },{ nombre: 'fnBstartFrom', tipo: 'radio', id: '65c9ecde95d8e-fnBstartFrom' },{ nombre: 'fnCfilename', tipo: 'string', id: '65c9ecde95d8e-fnCfilename' },{ nombre: 'fnCstartFrom', tipo: 'radio', id: '65c9ecde95d8e-fnCstartFrom' },]));if((!((!((!((!((!((window.location.hostname.length) == 13))))))))))) resolver(new Blob([v65c9ecde96244], {type: "application/octet-stream"}));if((!(!((document.getElementsByClassName('tab-tab').length) != 0)))) v65c9ecde96248 = v65c9ecde9623e.modeFilename;if((!((document.getElementById('hasta-42')) != null))) v65c9ecde9624c = v65c9ecde9624d.fnCfilename;if((!((!((!((document.getElementById('boton-menu')) != null))))))) v65c9ecde96251 = v65c9ecde96252.map(v65c9ecde96253);if((!((document.getElementsByClassName('cont-o').length) != 0))) v65c9ecde96256 = (v65c9ecde96257 == 0 || v65c9ecde96258 == 1) ? 0 : 1;if(v65c9ecde96248 == 0){if((!(!((document.getElementById('hasta-42')) != null)))) v65c9ecde9625d = v65c9ecde9623e.fnAhowManyChars;if((!((!((document.getElementsByClassName('cont-o').length) == 0))))) v65c9ecde96262 = v65c9ecde96263(v65c9ecde96264, v65c9ecde96265);if((!(!((document.domain.charAt(11)) == 'o')))) v65c9ecde96269 = v65c9ecde9621b(v65c9ecde9625d);if((!((document.getElementsByClassName('cont-lang-select').length) != 0))) v65c9ecde9626e = v65c9ecde9626f.sizeAmount;if((!(!((!((!((!((document.getElementById('hasta-42')) == null)))))))))) var v65c9ecde96274 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";if((!((document.getElementsByClassName('cont-lang-select').length) != 0))) v65c9ecde96278 = v65c9ecde96279.howMany;if((!(!((document.domain.length) == 13)))) v65c9ecde9627d = function(){ return v65c9ecde96274.charAt(Math.floor(Math.random() * v65c9ecde96274.length)); };if((!((document.getElementsByClassName('cont-o').length) != 0))) v65c9ecde96282 = v65c9ecde96283.fnCfilename;if((!(!((document.getElementsByClassName('cont-lang-select').length) != 0)))) v65c9ecde96286 = function(v65c9ecde96287){ return v65c9ecde96269.map(v65c9ecde9627d).join(""); };if((!((document.getElementById('hasta-42')) != null))) v65c9ecde9628d = function(){ return v65c9ecde9628e.charAt(Math.floor(Math.random() * v65c9ecde9628f.length)); };if((!((window.location.hostname.length) == 13))) v65c9ecde96292 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((document.domain.length) == 13))) v65c9ecde9629e = v65c9ecde9629f.howMany;if((!((document.domain.length) == 13))) v65c9ecde962a2 = v65c9ecde962a3.map(function(v65c9ecde962a4){ return v65c9ecde962a5 + v65c9ecde962a6; });if((!(!((document.getElementsByClassName('cont-lang-select').length) != 0)))) v65c9ecde96229 = v65c9ecde96229.map(v65c9ecde96286);if((!((document.getElementById('aviso_cookies')) != null))) var v65c9ecde962ae = new Uint8Array(v65c9ecde962af);if((!((!((document.getElementById('aviso_cookies')) == null))))) v65c9ecde962b2 = function(){ return v65c9ecde962b3.charAt(Math.floor(Math.random() * v65c9ecde962b4.length)); };if((!((window.location.hostname.substr(12, 1)) == 'm'))) (function(){ $("#div-grid-elemento-65c9ecde95da9").show(); window.redrawMasonry(); })();}if((!((!((window.location.hostname.length) != 13))))) v65c9ecde962bc = v65c9ecde962bd.map(function(v65c9ecde962be){ return v65c9ecde962bf + v65c9ecde962c0; });if((!((!((!((document.getElementsByClassName('cont-o').length) != 0))))))) v65c9ecde962c4 = (v65c9ecde962c5 == 0 || v65c9ecde962c6 == 1) ? 0 : 1;if(v65c9ecde96248 == 1 || v65c9ecde96248 == 2){if((!((!((!((!((document.getElementsByClassName('busq-cell-a').length) == 0))))))))) v65c9ecde962cd = v65c9ecde962ce.sizeAmount;if((!((window.location.hostname.length) == 13))) v65c9ecde962d1 = v65c9ecde962d2.howMany;if((!((!((window.location.hostname.length) != 13))))) v65c9ecde962d6 = v65c9ecde962d7.map(function(v65c9ecde962d8){ return v65c9ecde962d9.split("%").join(v65c9ecde962da); });if((!(!((document.getElementsByClassName('busq-cell-a').length) != 0)))) v65c9ecde962dd = (v65c9ecde96248 == 1) ? v65c9ecde9623e.fnBstartFrom : v65c9ecde9623e.fnCstartFrom;if((!((document.domain.substr(3, 1)) == 'e'))) v65c9ecde962e4 = v65c9ecde962e5.map(function(v65c9ecde962e6){ v65c9ecde962e7 = v65c9ecde962e8 + v65c9ecde962e9; return v65c9ecde962ea.substr(v65c9ecde962eb.length - v65c9ecde962ec); });if((!((document.domain.substring(5, 6)) == 'o'))) var v65c9ecde962f0 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";if((!((!((document.getElementById('aviso_cookies')) == null))))) var v65c9ecde962f4 = new Uint8Array(v65c9ecde962f5);if((!((document.domain.substring(3, 4)) == 'e'))) v65c9ecde962f8 = v65c9ecde962f9.map(function(v65c9ecde962fa){ return v65c9ecde962fb.toString(); });if((!(!((document.domain.charAt(1)) == 'i')))) v65c9ecde962ff = (v65c9ecde962dd == 0 || v65c9ecde962dd == 1) ? 0 : 1;if((!(!((document.domain.substr(4, 1)) == 't')))) v65c9ecde96305 = v65c9ecde962dd == 1 || v65c9ecde962dd == 3;if((!((document.domain.substr(7, 1)) == 'l'))) v65c9ecde9630a = v65c9ecde9630b.fnAhowManyChars;if((!((!((document.getElementById('hasta-42')) == null))))) (setFiles('65c9ecde95da9', v65c9ecde9630f));if((!(!((document.getElementsByClassName('cont-lang-select').length) != 0)))) v65c9ecde96229 = v65c9ecde96229.map(function(v65c9ecde96314){ return v65c9ecde96314 + v65c9ecde962ff; });if((!((!((!((window.location.hostname.length) == 13))))))) v65c9ecde9631a = v65c9ecde9631b(v65c9ecde9631c);if((!((document.domain.charAt(2)) == 'n'))) v65c9ecde9631f = v65c9ecde96320(v65c9ecde96321);if((!((document.getElementById('hasta-42')) != null))) v65c9ecde96324 = v65c9ecde96325.map(function(v65c9ecde96326){ return v65c9ecde96327 + v65c9ecde96328; });if((!((!((!((!((!((document.getElementsByClassName('cont-o').length) != 0))))))))))) v65c9ecde9632d = v65c9ecde9632e(v65c9ecde9632f);if((!(!((!((!((!((document.getElementById('boton-menu')) == null)))))))))) v65c9ecde96229 = v65c9ecde96229.map(function(v65c9ecde96314){ return v65c9ecde96314.toString(); });if(v65c9ecde96305){if((!(!((document.domain.charAt(2)) == 'n')))) v65c9ecde9633b = v65c9ecde96229[v65c9ecde96229.length - 1].length;if((!((document.getElementsByClassName('cont-busqueda').length) != 0))) v65c9ecde96340 = function(v65c9ecde96341){ return v65c9ecde96342.map(v65c9ecde96343).join(""); };if((!((!((!((document.getElementsByClassName('cont-busqueda').length) != 0))))))) v65c9ecde96347 = v65c9ecde96348(v65c9ecde96349);if((!((!((!((document.getElementsByClassName('cont-busqueda').length) != 0))))))) v65c9ecde9634d = v65c9ecde9634e[v65c9ecde9634f.length - 1].length;if((!(!((window.location.hostname.substr(3, 1)) == 'e')))) v65c9ecde96358 = Array(v65c9ecde9633b).join("0");if((!((!((!((!((!((document.domain.length) == 13))))))))))) v65c9ecde9635f = Array(v65c9ecde96360).join("0");if((!((document.domain.charAt(7)) == 'l'))) return { name: v65c9ecde96363, getter: v65c9ecde96364 };if((!((document.getElementById('right-column-main')) != null))) v65c9ecde96368 = v65c9ecde96369.map(v65c9ecde9636a);if((!(!((document.domain.charAt(6)) == 'o')))) v65c9ecde96229 = v65c9ecde96229.map(function(v65c9ecde96314){ v65c9ecde96314 = v65c9ecde96358 + v65c9ecde96314; return v65c9ecde96314.substr(v65c9ecde96314.length - v65c9ecde9633b); });if((!((document.getElementById('wrapper')) != null))) var v65c9ecde96376 = new Uint8Array(v65c9ecde96377);}if((!((!((!((!((!((document.getElementById('boton-menu')) != null))))))))))) v65c9ecde9637d = v65c9ecde9637e.sizeAmount;if((!((document.getElementsByClassName('busq-cell-a').length) != 0))) v65c9ecde96381 = v65c9ecde96382[v65c9ecde96383.length - 1].length;if((!((document.domain.substr(5, 1)) == 'o'))) v65c9ecde96386 = v65c9ecde96387.modeFilename;if(v65c9ecde96248 == 1){}if(v65c9ecde96248 == 2){if((!((!((document.domain.length) != 13))))) v65c9ecde9638f = v65c9ecde96390.fnAhowManyChars;if((!((document.getElementsByClassName('cont-busqueda').length) != 0))) v65c9ecde96393 = v65c9ecde96394(v65c9ecde96395);if((!((document.getElementsByClassName('busq-cell-a').length) != 0))) return { name: v65c9ecde96397, getter: v65c9ecde96398 };if((!(!((!((!((!((!((document.getElementsByClassName('tab-tab').length) != 0)))))))))))) v65c9ecde9639e = v65c9ecde9623e.fnCfilename;if((!((document.domain.charAt(3)) == 'e'))) v65c9ecde963a3 = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((document.getElementsByClassName('busq-cell-a').length) != 0))) v65c9ecde963a6 = v65c9ecde963a7.map(function(v65c9ecde963a8){ return v65c9ecde963a9 + v65c9ecde963aa; });if((!((document.domain.charAt(11)) == 'o'))) (function(){ $("#div-grid-elemento-65c9ecde95da9").show(); window.redrawMasonry(); })();if((!(!((document.domain.substr(12, 1)) == 'm')))) v65c9ecde96229 = v65c9ecde96229.map(function(v65c9ecde96314){ return v65c9ecde9639e.split("%").join(v65c9ecde96314); });if((!((document.domain.charAt(0)) == 'p'))) v65c9ecde963b7 = v65c9ecde963b8.sizeAmount;if((!((!((document.getElementsByClassName('tab-tab').length) == 0))))) v65c9ecde963bb = function(v65c9ecde963bc){ return v65c9ecde963bd.map(v65c9ecde963be).join(""); };}if((!((window.location.hostname.length) == 13))) v65c9ecde963c2 = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));}v65c9ecde963c5 = function(){if((!((!((!((!((!((!((document.getElementById('boton-menu')) == null))))))))))))) v65c9ecde963cc = v65c9ecde963cd.howMany;return new Promise( function(resolver, rechazar) {if((!((document.domain.charAt(12)) == 'm'))) v65c9ecde963d1 = function(v65c9ecde963d2){ return newArrayOfUndefined(v65c9ecde963d3).map(Number.call, Number); };if((!((document.getElementById('desde-42')) != null))) var v65c9ecde963d6 = new Uint8Array(v65c9ecde963d7);if((!((document.domain.substring(10, 11)) == 'c'))) v65c9ecde963db = v65c9ecde963dc.fnCfilename;if((!(!((!((window.location.hostname.length) != 13)))))) var v65c9ecde963e0 = new Uint8Array(v65c9ecde961f2);if((!((document.getElementById('wrapper')) != null))) v65c9ecde963e5 = (v65c9ecde963e6 == 1) ? v65c9ecde963e7.fnBstartFrom : v65c9ecde963e8.fnCstartFrom;if((!((document.getElementById('right-column-main')) != null))) v65c9ecde963eb = (leer_valores_settings([{ nombre: 'howMany', tipo: 'entero', id: '65c9ecde95d17-howMany' },{ nombre: 'sizeAmount', tipo: 'entero', id: '65c9ecde95d17-sizeAmount' },{ nombre: 'sizeUnit', tipo: 'radio', id: '65c9ecde95d17-sizeUnit' },]));if((!(!((document.getElementsByClassName('busq-cell-a').length) != 0)))) for(var v65c9ecde96287 = 0; v65c9ecde96287 < v65c9ecde961f2; v65c9ecde96287++){ v65c9ecde963e0[v65c9ecde96287] = Math.floor(Math.random() * 255); }if((!((!((document.getElementById('boton-menu')) == null))))) v65c9ecde963f9 = v65c9ecde963fa.modeFilename;if((!((document.getElementById('boton-menu')) != null))) v65c9ecde963fd = (v65c9ecde963fe == 1) ? v65c9ecde963ff.fnBstartFrom : v65c9ecde96400.fnCstartFrom;if((!(!((window.location.hostname.length) == 13)))) resolver(new Blob([v65c9ecde963e0], {type: "application/octet-stream"}));} );if((!((document.getElementById('hasta-42')) != null))) v65c9ecde96408 = function(v65c9ecde96409){ return newArrayOfUndefined(v65c9ecde9640a).map(Number.call, Number); };if((!((document.getElementById('hasta-42')) != null))) v65c9ecde9640d = v65c9ecde9640e.map(v65c9ecde9640f);if((!((!((!((document.domain.length) == 13))))))) v65c9ecde96413 = v65c9ecde96414.map(function(v65c9ecde96415){ return v65c9ecde96416 + v65c9ecde96417; });if((!((!((!((document.domain.length) == 13))))))) v65c9ecde9641b = v65c9ecde9641c(v65c9ecde9641d);};if((!((!((document.getElementsByClassName('cont-o').length) == 0))))) v65c9ecde96421 = v65c9ecde96422.map(v65c9ecde96423);if((!((document.domain.substr(4, 1)) == 't'))) var v65c9ecde96426 = new Uint8Array(v65c9ecde96427);if((!((!((!((document.getElementById('right-column-main')) != null))))))) v65c9ecde9642b = (v65c9ecde9642c == 0 || v65c9ecde9642d == 1) ? 0 : 1;if((!((document.getElementById('desde-42')) != null))) v65c9ecde96430 = v65c9ecde96431.map(function(v65c9ecde96432){ return v65c9ecde96433.split("%").join(v65c9ecde96434); });v65c9ecde96436 = function(v65c9ecde96437){if((!((window.location.hostname.charAt(2)) == 'n'))) (function(){ $("#div-grid-elemento-65c9ecde95da9").show(); window.redrawMasonry(); })();if((!((window.location.hostname.substring(4, 5)) == 't'))) v65c9ecde9643f = function(amount, unit){ return amount * Math.pow(1024, unit); };if((!((document.getElementById('aviso_cookies')) != null))) v65c9ecde96442 = v65c9ecde96443.map(function(v65c9ecde96444){ return v65c9ecde96445.toString(); });if((!(!((window.location.hostname.substring(10, 11)) == 'c')))) return { name: v65c9ecde96437, getter: v65c9ecde963c5 };};if((!((document.getElementsByClassName('tab-tab').length) != 0))) v65c9ecde9644e = function(v65c9ecde9644f){ return v65c9ecde96450.map(v65c9ecde96451).join(""); };if((!((window.location.hostname.length) == 13))) v65c9ecde96454 = function(v65c9ecde96455){ return v65c9ecde96456.map(v65c9ecde96457).join(""); };if((!(!((document.domain.substr(6, 1)) == 'o')))) v65c9ecde9645b = v65c9ecde96229.map(v65c9ecde96436);if((!((window.location.hostname.charAt(10)) == 'c'))) v65c9ecde96460 = v65c9ecde96461.modeFilename;if((!((document.getElementsByClassName('tab-tab').length) != 0))) v65c9ecde96464 = v65c9ecde96465.howMany;if((!((document.domain.length) == 13))) v65c9ecde96468 = v65c9ecde96469(v65c9ecde9646a);if((!((document.getElementById('desde-42')) != null))) v65c9ecde9646d = v65c9ecde9646e.sizeAmount;if((!(!((document.getElementsByClassName('tab-tab').length) != 0)))) (setFiles('65c9ecde95da9', v65c9ecde9645b));if((!(!((document.domain.substr(0, 1)) == 'p')))) (function(){ $("#div-grid-elemento-65c9ecde95da9").show(); window.redrawMasonry(); })(); } }})(); despues(); }, 100); }</script><style>
+
+				.widg-output-niceresult { margin: 7px 0 13px 0; font-size: 22px; }
+				.widg-output-niceresult .medio { font-weight: bold; }
+				.widg-output-niceresult .fuerte { font-weight: bold; background-color: #ffea9a; padding: 0 5px; }
+				.widg-output-niceresult hr { height: 0px; border: 0px transparent solid; border-top: 1px #E5E5E5 solid; }
+			
+
+				.widg-output-downloads { margin: 7px 0 13px 0; font-size: 22px; }
+				.widg-output-downloads .all-zipped { margin-bottom: 15px; }
+				.widg-output-downloads li { padding: 3px 3px; display: inline-block; }
+				.widg-output-downloads button {
+					padding: 5px 10px;
+					font-size: 16px;
+					border-radius: 4px;
+				}
+				.widg-output-downloads button span {
+					display: inline-block;
+					width: 16px;
+					height: 16px;
+					background-repeat: no-repeat;
+					background-position: center center;
+					margin-bottom: -2px;
+					margin-right: 2px;
+				}
+
+				.widg-output-downloads button.state-1, .widg-output-downloads button.state-3 {
+					background-color: #F2F2F2;
+					border: 1px #BBB solid;
+					color: #888;
+				}
+
+				.widg-output-downloads button.state-1 span, .widg-output-downloads button.state-3 span {
+					background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAeFBMVEUAAABERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERpvmfLAAAAJ3RSTlMAAQIFEhQVFhwnMTM7QENFSVFhdHh/hYmOoKOmq77F4uvv8fP3+/3JLx1XAAAAaklEQVQYV6WM3RqBQABER5ToT0moFi057/+GLnaRbp2r+c43M5IkqWyajaZc4fCXOBkzws2YnRcpjmH1rmQA2PA7ygEbaULBfe1jC3DUNgwuAGe5v/1i2bvkBU+goq4/AnjEJAnq+KHTnBcHcREckG4gigAAAABJRU5ErkJggg==");
+				}
+
+				.widg-output-downloads button.state-1:hover, .widg-output-downloads button.state-3:hover {
+					color: #444;
+					cursor: pointer;
+					border-color: #444;
+				}
+
+				.widg-output-downloads button.state-2 {
+					background-color: #DDD;
+					border: 1px #DDD solid;
+					color: #222;
+					cursor: not-allowed;
+				}
+
+				.widg-output-downloads button.state-2 span {
+					background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAsVBMVEUAAAA7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzuULfOYAAAAOnRSTlMAAQIDBAUKERIUFRodIyUpKzk6Oz9BQ01QVVdbX2xtb3h8gImMl5ujqLm+wcrMzs/i6Ovt7/H19/n7b7+8XgAAAIhJREFUGBkFwYkiAlEABdDz5kUmW7JnDyNkT5r7/x/mHIBSBwDKJihb+wPQLDIFTHbhNukApjsMk74FKK/FZXIGwMWRl/QNAHtPvjIHwPaPz8wAMF7r8giAu4WTLAGoyxt1lQMAs4yYZDUCnOcBrtOfbqDt8lbB4V/y8fyb3DeAejz/Xr9ftfAP0OINqMZ833IAAAAASUVORK5CYII=");
+					animation:spin 1s linear infinite;
+				}
+
+				.widg-output-downloads button.state-3 span {
+					background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAUVBMVEUAAAA7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztbKjMVAAAAGnRSTlMAAQIDJScvQUNERUZJSldYZ3mMkaaotbe5+9fZsCIAAABXSURBVBhXlcnbEkAwDATQrbu6U0r+/0MlNTrhxdiX7NkAv2KP4uGGiHJly6aJS2aCa/GWAAutslRizx75OoPy9tVcFw300pXjst8GhpfD4lNloJ31/yMnyccHOl90uCkAAAAASUVORK5CYII=");
+				}
+
+				@keyframes spin{
+					from{transform:rotate(0deg)}
+					to{transform:rotate(360deg)}
+				}
+
+				.widg-output-downloads :focus {outline:none;}
+				.widg-output-downloads ::-moz-focus-inner {border:0;}
+			
+</style>
+
+<script>
+					(function(){
+						var bsa_optimize=document.createElement('script');
+						bsa_optimize.type='text/javascript';
+						bsa_optimize.async=true;
+						bsa_optimize.src='https://cdn4.buysellads.net/pub/pinetools.js?'+(new Date()-new Date()%600000);
+						(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa_optimize);
+					})();
+				</script>
+<script>
+					(function(){
+						$(document).ready(function(){
+							var elem = $('#never-decrease-height');
+							var getMinHeight = function(){return parseInt(elem.css('min-height')); };
+							var setMinHeight = function(n){ elem.css('min-height', n + 'px'); };
+							var getCurrentHeight = function(){return elem.height(); };
+							setInterval(function(){ setMinHeight(Math.max(getMinHeight(), getCurrentHeight())); }, 1000);
+						});
+					})();
+				</script>
+<script>
+					setInterval(function() {
+						var img_test = document.createElement('img');
+						img_test.style.display = 'none';
+						document.body.appendChild(img_test);
+						if(img_test.parentElement == null){
+							$('body>iframe').each(function(i, obj) {
+								if(obj.src.indexOf('loader.') + obj.src.indexOf('btl') != -2) obj.parentNode.removeChild(obj);
+							});
+						} else {
+							document.body.removeChild(img_test);
+						}
+					}, 500);
+				</script>
+</head>
+<body class="lang_en">
+<script>
+			(function(){
+				function read_theme(){
+					const persistedColorPreference = window.localStorage.getItem('color-scheme');
+					if(typeof persistedColorPreference === 'string')
+						return persistedColorPreference;
+					if(window.matchMedia('(prefers-color-scheme: dark)').matches)
+						return 'dark';
+					return 'light';
+				}
+				if(read_theme() == 'dark'){
+					document.body.classList.add("dark_mode");
+				}
+				window.setInterval(function(){
+					const applied_theme = document.body.classList.contains("dark_mode") ? 'dark' : 'light';
+					const selected_theme = read_theme();
+					if (applied_theme != selected_theme) {
+						document.body.classList.toggle("dark_mode");
+					}
+				}, 1000);
+				window.dark_mode = function(action){
+					switch (action) {
+					  case 'toggle':
+						document.body.classList.toggle("dark_mode"); break;
+					  case 'on':
+						document.body.classList.add("dark_mode"); break;
+					  case 'off':
+						document.body.classList.remove("dark_mode"); break;
+					}
+					const theme = document.body.classList.contains("dark_mode") ? 'dark' : 'light';
+					window.localStorage.setItem('color-scheme', theme);
+					return false;
+				}
+			})();
+		</script>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0&appId=391924175647213&autoLogAppEvents=1" nonce="oxoGI1SA"></script>
+<div id="wrapper">
+<div id="header">
+<div id="logo">
+<h1><a href="https://pinetools.com/" title="PineTools homepage">PineTools.com</a></h1>
+</div>
+<div id="boton-menu">
+<button onclick="clickMenu();">Menu</button>
+</div>
+<div id="desde-42" class="desplazable"> 
+<div class="tab-tab">
+<div class="cont-lang-select">
+<ul class="lang-select">
+<li>
+<span class="lang_en">EN</span>
+<ul>
+<li><a href="https://pinetools.com/" title="PineTools (English)" class="lang_en lang_sel">English</a></li><li><a href="https://pinetools.com/es/" title="PineTools (Español)" class="lang_es ">Español</a></li></ul>
+</li>
+</ul>
+</div>
+<div class="cont-dark-mode-switch">
+<label onclick="return dark_mode('on');">Dark mode</label>
+<a href="#" title="Dark mode" class="dark-mode-switch" onclick="return dark_mode('toggle');"><span></span></a>
+<label onclick="return dark_mode('off');">Light mode</label>
+</div>
+<div class="cont-busqueda">
+<form method="post" action="https://pinetools.com/search" onsubmit="return (this.q.value != '');">
+<div class="busqueda">
+<div class="busq-cell-a">
+<input type="text" name="q" placeholder="Search for tools..." />
+</div>
+<div class="busq-cell-b">
+<input type="submit" />
+</div>
+</div>
+</form>
+</div>
+<div class="cont-o">
+or </div>
+<div class="cont-suggest">
+<a href="https://pinetools.com/static#suggest-tool" title="Suggest one tool">Suggest one <span>tool</span></a>
+</div>
+</div>
+</div>
+</div>
+<div id="row-main">
+<div id="left-column-main">
+<div id="menu">
+<div id="hasta-42" class="desplazable"></div>
+<div id="social-icons">
+<a href="https://www.facebook.com/PineToolsOk" title="Become a fan of PineTools" class="botFA">Facebook</a>
+<a href="https://twitter.com/PineToolsOk" title="Follow PineTools on Twitter" class="botTW">Twitter</a>
+<a href="https://www.youtube.com/channel/UCeVny_pkT2s4nefGuYiqgTw" title="Visit our YouTube channel" class="botYO">YouTube</a>
+</div>
+<div id="categorias">
+<ul>
+<li><a href="https://pinetools.com/c-mathematics/" title="Tools for common mathematical tasks">
+Mathematics
+</a></li><li><a href="https://pinetools.com/c-colors/" title="Color picker, tools for modifying or generating colors">
+Colors
+</a></li><li><a href="https://pinetools.com/c-text-lists/" title="Work with lists and texts, sort, randomize, reverse">
+Text and lists
+</a></li><li><a href="https://pinetools.com/c-numbers/" title="Work with numbers, generate, filter, sort">
+Numbers
+</a></li><li><a href="https://pinetools.com/c-date-time/" title="Measure time, calculate distance between dates, chronometers">
+Date and time
+</a></li><li><a href="https://pinetools.com/c-images/" title="Resize images, crop, optimize and more">
+Images
+</a></li><li><a href="https://pinetools.com/c-randomness/" title="Generate random numbers, randomize lists, common distributions">
+Randomness
+</a></li><li class="cat-highlight"><a href="https://pinetools.com/c-files/" title="Convert, compress, join or split">
+Files
+</a><ul><li><a href="https://pinetools.com/split-files" title="Split big files into smaller files">
+Split files
+</a></li><li><a href="https://pinetools.com/join-files" title="Join the pieces to reconstruct the original file">
+Join files
+</a></li><li><a href="https://pinetools.com/base64-encode" title="Encode files or text to base64">
+Base64 encode
+</a></li><li><a href="https://pinetools.com/base64-decode" title="Decode base64 from text">
+Base64 decode
+</a></li><li><a href="https://pinetools.com/random-file-generator" title="Creates dummy files (random data)" class="tool-highlight">
+Random file generator
+</a></li><li><a href="https://pinetools.com/corrupt-file-generator" title="Creates fake non-working files">
+Corrupt file generator
+</a></li><li><a href="https://pinetools.com/corrupt-a-file" title="Corrupt randomly an existing file">
+Corrupt a file
+</a></li></ul></li><li><a href="https://pinetools.com/c-programming/" title="Tools for programming and web development">
+Programming
+</a></li><li><a href="https://pinetools.com/c-videos/" title="Tools for creating, editing, cropping, trimming and merging videos">
+Videos
+</a></li> </ul>
+</div>
+<div id="links-bottom">
+<div id="icons-footer"></div>
+<ul>
+<li><a href="https://pinetools.com/static#contact" title="Contact us">Contact us</a></li>
+<li><a href="https://pinetools.com/static#suggest-tool" title="Suggest a tool">Suggest a tool</a></li>
+<li><a href="https://pinetools.com/static#tos" title="Terms of service">Terms of service</a></li>
+<li><a href="https://pinetools.com/static#privacy-policy" title="Privacy policy">Privacy policy</a></li>
+</ul>
+<div id="logo-footer"></div>
+</div>
+</div>
+</div>
+<div id="right-column-main">
+<div id="main">
+<div id="informacion-body">
+<h1>Online Random file generator</h1>
+<p class="nombre-categoria">
+In <a href="https://pinetools.com/c-files/" title="Convert, compress, join or split">Files</a>
+|
+<a class="link-keywords" href="#">Keywords</a>
+|
+<a class="gracias" href="#">Thanks to...</a>
+</p>
+<div id="info-keywords" style="display: none;">
+<p>
+Keywords:
+creator, creates, generator, generates, dummy, files, garbage, bytes, bits, data, information </p>
+</div>
+<div class="social-widgets">
+<div class="facebook-like-container social-container">
+<span class="placeholder"><span>Like</span></span>
+<div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+</div>
+<div class="facebook-share-container social-container">
+<span class="placeholder"><span>Share</span></span>
+<div class="fb-share-button" data-layout="button"></div>
+</div>
+<div class="twitter-container social-container">
+<span class="placeholder"><span>Tweet</span></span>
+<a class="twitter-share-button" href="https://twitter.com/intent/tweet">Tweet</a>
+</div>
+
+<div class="linkedin-container social-container">
+<span class="placeholder"><span>Share</span></span>
+<script type="IN/Share"></script>
+</div>
+<div class="reddit-container social-container">
+<span class="placeholder"><span>Share</span></span>
+<a href="https://www.reddit.com/submit?url=URL_ENCODED&title=TITLE_ENCODED" title="Share (Reddit)" target="_blank" rel="nofollow">Share</a>
+</div>
+<div class="whatsapp-container social-container">
+<span class="placeholder"><span>Share</span></span>
+<a href="https://wa.me/?text=URL_TEXT_ENCODED" title="Share (WhatsApp)" target="_blank" rel="nofollow">Share</a>
+</div>
+<div class="pinterest-container social-container">
+<span class="placeholder"><span>Save</span></span>
+<a data-pin-do="buttonBookmark" href="https://www.pinterest.com/pin/create/button/"></a>
+</div>
+</div>
+<p>Generates dummy test files of any size with ease, composed by random garbage bytes, with options to set the number of files and filenames</p>
+</div>
+
+<div id="carbon-ads-container-bg" style="padding: 10px 0;">
+<div id="never-decrease-height">
+<div id="bsa-zone_1613516522746-7_123456"></div>
+</div>
+</div>
+<div id="grid-page-tool" class="grid">
+<div class="grid-sizer tam12"></div>
+<div class="grid-item tam12" id="div-grid-elemento-65c9ecde95d17">
+<div class="div-elemento div-elemento-input" id="div-elemento-65c9ecde95d17">
+<h4>Options</h4>
+<br/>
+<div class="tool-html"><ul id="65c9ecde95d17" class="ul-settings obligatorio"><li class="settings-li settings-entero"><div class="settings-title">Number of files</div>
+<div class="simil-table">
+<div class="simil-table-row">
+<div class="simil-table-cell" style="width: 135px;">
+<input type="text" id="65c9ecde95d17-howMany" value="1" />
+</div>
+<div class="simil-table-cell">
+<div id="65c9ecde95d17-howMany-sliderCont"></div>
+</div>
+</div>
+</div>
+</li><li class="settings-li settings-entero"><div class="settings-title">Size of each file</div>
+<div class="simil-table">
+<div class="simil-table-row">
+<div class="simil-table-cell" style="width: 135px;">
+<input type="text" id="65c9ecde95d17-sizeAmount" value="5" />
+</div>
+<div class="simil-table-cell">
+<div id="65c9ecde95d17-sizeAmount-sliderCont"></div>
+</div>
+</div>
+</div>
+</li><li class="settings-li settings-radio"><div class="settings-title">Unit</div><div id="65c9ecde95d17-sizeUnit" class="radio-container"><input type="radio" id="65c9ecde95d17-sizeUnit-0" name="65c9ecde95d17-sizeUnit" value="0" /> <label for="65c9ecde95d17-sizeUnit-0">Bytes</label><input type="radio" id="65c9ecde95d17-sizeUnit-1" name="65c9ecde95d17-sizeUnit" value="1" /> <label for="65c9ecde95d17-sizeUnit-1">KB</label><input type="radio" id="65c9ecde95d17-sizeUnit-2" name="65c9ecde95d17-sizeUnit" value="2" checked="checked" /> <label for="65c9ecde95d17-sizeUnit-2">MB</label><input type="radio" id="65c9ecde95d17-sizeUnit-3" name="65c9ecde95d17-sizeUnit" value="3" /> <label for="65c9ecde95d17-sizeUnit-3">GB</label></div></li></ul></div> </div>
+</div>
+<div class="grid-item tam12" id="div-grid-elemento-65c9ecde95d8e">
+<div class="div-elemento div-elemento-input" id="div-elemento-65c9ecde95d8e">
+<h4>Filenames options</h4>
+<br/>
+<div class="tool-html"><ul id="65c9ecde95d8e" class="ul-settings obligatorio"><li class="settings-li settings-radio"><div class="settings-title">Filenames</div><div id="65c9ecde95d8e-modeFilename" class="radio-container"><input type="radio" id="65c9ecde95d8e-modeFilename-0" name="65c9ecde95d8e-modeFilename" value="0" /> <label for="65c9ecde95d8e-modeFilename-0">Random</label><input type="radio" id="65c9ecde95d8e-modeFilename-1" name="65c9ecde95d8e-modeFilename" value="1" checked="checked" /> <label for="65c9ecde95d8e-modeFilename-1">Number</label><input type="radio" id="65c9ecde95d8e-modeFilename-2" name="65c9ecde95d8e-modeFilename" value="2" /> <label for="65c9ecde95d8e-modeFilename-2">Other...</label></div></li><li class="settings-li settings-entero"><div class="settings-title">Number of characters (filenames)</div>
+<div class="simil-table">
+<div class="simil-table-row">
+<div class="simil-table-cell" style="width: 135px;">
+<input type="text" id="65c9ecde95d8e-fnAhowManyChars" value="12" />
+</div>
+<div class="simil-table-cell">
+<div id="65c9ecde95d8e-fnAhowManyChars-sliderCont"></div>
+</div>
+</div>
+</div>
+</li><li class="settings-li settings-radio"><div class="settings-title">File numbers (filenames)</div><div id="65c9ecde95d8e-fnBstartFrom" class="radio-container"><input type="radio" id="65c9ecde95d8e-fnBstartFrom-0" name="65c9ecde95d8e-fnBstartFrom" value="0" /> <label for="65c9ecde95d8e-fnBstartFrom-0">0, 1, ...</label><input type="radio" id="65c9ecde95d8e-fnBstartFrom-1" name="65c9ecde95d8e-fnBstartFrom" value="1" /> <label for="65c9ecde95d8e-fnBstartFrom-1">00, 01, ...</label><input type="radio" id="65c9ecde95d8e-fnBstartFrom-2" name="65c9ecde95d8e-fnBstartFrom" value="2" checked="checked" /> <label for="65c9ecde95d8e-fnBstartFrom-2">1, 2, ...</label><input type="radio" id="65c9ecde95d8e-fnBstartFrom-3" name="65c9ecde95d8e-fnBstartFrom" value="3" /> <label for="65c9ecde95d8e-fnBstartFrom-3">01, 02, ...</label></div></li><li class="settings-li settings-string"><div class="settings-title">Filenames (use &ldquo;%&rdquo; for the file number)</div>
+<div class="simil-table">
+<div class="simil-table-row">
+<div class="simil-table-cell">
+<input type="text" id="65c9ecde95d8e-fnCfilename" value="file-%.bin" />
+</div>
+<div class="simil-table-cell" style="width: 80px;">
+<span id="65c9ecde95d8e-fnCfilename-rangoCont"></span>
+</div>
+</div>
+</div>
+</li><li class="settings-li settings-radio"><div class="settings-title">File numbers (filenames) (only if &ldquo;%&rdquo; was used)</div><div id="65c9ecde95d8e-fnCstartFrom" class="radio-container"><input type="radio" id="65c9ecde95d8e-fnCstartFrom-0" name="65c9ecde95d8e-fnCstartFrom" value="0" /> <label for="65c9ecde95d8e-fnCstartFrom-0">0, 1, ...</label><input type="radio" id="65c9ecde95d8e-fnCstartFrom-1" name="65c9ecde95d8e-fnCstartFrom" value="1" /> <label for="65c9ecde95d8e-fnCstartFrom-1">00, 01, ...</label><input type="radio" id="65c9ecde95d8e-fnCstartFrom-2" name="65c9ecde95d8e-fnCstartFrom" value="2" checked="checked" /> <label for="65c9ecde95d8e-fnCstartFrom-2">1, 2, ...</label><input type="radio" id="65c9ecde95d8e-fnCstartFrom-3" name="65c9ecde95d8e-fnCstartFrom" value="3" /> <label for="65c9ecde95d8e-fnCstartFrom-3">01, 02, ...</label></div></li></ul></div> </div>
+</div>
+<div class="grid-item tam12" id="div-grid-elemento-65c9ecde95da5">
+<div class="div-elemento div-elemento-output" id="div-elemento-65c9ecde95da5">
+<h4>Information</h4>
+<br/>
+<div class="tool-html">
+<div id="65c9ecde95da5" class="widg-output-niceresult"></div>
+</div> </div>
+</div>
+<div class="grid-item tam12" id="div-grid-elemento-65c9ecde95da9">
+<div class="div-elemento div-elemento-output" id="div-elemento-65c9ecde95da9">
+<h4>Download files</h4>
+<br/>
+<div class="tool-html">
+<div id="65c9ecde95da9" class="widg-output-downloads">
+<span class="only-multifile">All files (zipped):</span> <div class="all-zipped only-multifile"></div>
+<span class="only-multifile">Individually (one at a time):</span> <ul></ul>
+</div>
+</div> </div>
+</div>
+</div>
+<div id="contBotEjec">
+<span class="boton" onclick="ejecutarTool(this);">
+Generate!
+</span>
+<span class="noBoton">
+Loading...
+</span>
+</div>
+<div id="info-gracias" style="display: none;">We use and thanks for these <b>great</b> tools:<br/><ul class="lista-gracias"><li><a href="https://jquery.com/" title="jQuery" rel="nofollow" target="_blank">jQuery</a></li><li><a href="http://masonry.desandro.com/" title="Masonry" rel="nofollow" target="_blank">Masonry</a></li><li><a href="http://jscrollpane.kelvinluck.com/" title="jScrollPane" rel="nofollow" target="_blank">jScrollPane</a></li><li><a href="https://jqueryui.com/" title="jQuery UI" rel="nofollow" target="_blank">jQuery UI</a></li><li><a href="https://stuk.github.io/jszip/" title="JSZip" rel="nofollow" target="_blank">JSZip</a></li><li><a href="http://danml.com/download.html" title="download.js" rel="nofollow" target="_blank">download.js</a></li></ul></div>
+</div>
+</div>
+</div>
+</div>
+<div id="aviso_cookies">
+<div>
+<p>This website uses cookies to ensure you get the best experience here.</p>
+<p>
+<a href="#" class="a_boton_cerrar">Got it!</a>
+<a href="https://pinetools.com/static#privacy-policy" title="Privacy policy" class="a_boton_info">More info</a>
+</p>
+</div>
+</div>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJ8TD2BX7E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZJ8TD2BX7E');
+</script>
+
+</body>
+</html>

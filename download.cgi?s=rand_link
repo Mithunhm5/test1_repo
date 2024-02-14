@@ -1,0 +1,75 @@
+<html>
+ <head>
+  <title>Matt's Script Archive: Random Link Generator: Download</title>
+  <link rel="stylesheet" type="text/css" href="/msa.css">
+ </head>
+<body bgcolor=#FFFFFF text=#000000 link=#7777AA vlink=#7777AA leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+  <table border=0 cellpadding=0 cellspacing=0 width=100%>
+   <tr bgcolor=#DBE5EC><td><table border=0 cellpadding=0 cellspacing=0 width=800><tr><td width=300 nowrap><a href="/"><img src="/images/msalogo.gif" width=200 height=80 border=0 alt="MSA - Matt's Script Archive"></a></td>
+       <td width=500><a href="http://www.surveyfactory.com/" class=ExternLink><img src="/MercuryAd/upload/cmp/sf-banner.png" alt="SurveyFactory - Create and publish online web surveys" width="600" height="60" border="0"></a></td></tr></table></td></tr>
+   <tr><td class=LocationText><table border=0 cellpadding=1 cellspacing=0 width=798><tr><td>&nbsp;<a href="/index.html" class=ProgramLink>Matt's Script Archive:</a> <a href="/rand_link.html" class=ProgramLink>Random Link Generator:</a> <b>Download</b></td><td align=right><b></b></td></tr></table></td></tr>
+
+  </table>
+  <table border=0 cellpadding=0 cellspacing=0 width=100%>
+   <tr><td bgcolor=#DBE5EC width=168 valign=top nowrap class=DescriptionText>
+&nbsp;<br>        <table border=0 cellpadding=0 cellspacing=0 width=160>
+        <tr><td class=DescriptionText>&nbsp; <b>Other sites by Matt:</b></td></tr>
+        <tr><td class=lhBox>&nbsp;<a href="http://www.formmail.com/" class=AdvertSide><b>FormMail.com</b></a><br>
+&nbsp;&nbsp;- <a href="http://www.formmail.com/" style="color: #000000; text-decoration: none;">hosted form processor</a><br>
+&nbsp;<a href="http://www.surveyfactory.com/" class=AdvertSide><b>SurveyFactory</b></a><br>
+&nbsp;&nbsp;- <a href="http://www.surveyfactory.com/" style="color: #000000; text-decoration: none;">hosted survey software</a><br>
+&nbsp;<a href="http://cgi.resourceindex.com" class=AdvertSide><b>CGI Resource Index</b></a><br>
+&nbsp;&nbsp;- <a href="http://cgi.resourceindex.com/" style="color: #000000; text-decoration: none;">3,000+ Perl Scripts!</a><br>
+&nbsp;<a href="http://php.resourceindex.com" class=AdvertSide><b>PHP Resource Index</b></a><br>
+&nbsp;&nbsp;- <a href="http://php.resourceindex.com/" style="color: #000000; text-decoration: none;">2,000+ PHP Scripts!</a><br>
+&nbsp;<a href="http://www.chumpsoft.com/" class=AdvertSide><b>chumpsoft, inc.</b></a><br>
+&nbsp;&nbsp;- <a href="http://www.chumpsoft.com/" style="color: #000000; text-decoration: none;">online survey software</a></td></tr></table>
+<br>
+<hr size=1 noshade><table border=0 cellpadding=0 cellspacing=0 width=165><tr><td class=DescriptionText>
+ &nbsp; <b><a href="/index.html"><b>Matt's Script Archive</b></a></b><br>
+ &nbsp; &nbsp; <a href="/formmail.html">FormMail</a><br>
+ &nbsp; &nbsp; <a href="/guestbook.html">Guestbook</a><br>
+ &nbsp; &nbsp; <a href="/wwwboard.html">WWWBoard</a><br>
+ &nbsp; &nbsp; <a href="/search.html">Simple Search</a><br>
+ &nbsp; &nbsp; <a href="/counter.html">Counter</a><br>
+ &nbsp; &nbsp; <a href="/textcounter.html">TextCounter</a><br>
+ &nbsp; &nbsp; <a href="/rand_text.html">Random Text</a><br>
+ &nbsp; &nbsp; <a href="/textclock.html">TextClock</a><br>
+ &nbsp; &nbsp; <a href="/links.html">Free for all Links</a><br>
+ &nbsp; &nbsp; <b><a href="/rand_link.html">Random Link</a></b><br>
+ &nbsp; &nbsp; &nbsp; <a href="/readme/rand_link.html">Readme</a><br>
+ &nbsp; &nbsp; &nbsp; <b style="background-color: #ECF1F4;">&gt;&nbsp;Download&nbsp;</b><br>
+ &nbsp; &nbsp; &nbsp; <a href="/faq/rand_link.html">FAQ</a><br>
+ &nbsp; &nbsp; <a href="/cookielib.html">HTTP Cookie Library</a><br>
+ &nbsp; &nbsp; <a href="/countdown.html">Countdown</a><br>
+ &nbsp; &nbsp; <a href="/rand_image.html">Random Image</a><br>
+ &nbsp; &nbsp; <a href="/ssi_image.html">SSI Random Image</a><br>
+ &nbsp; &nbsp; <a href="/textcounter_cpp.html">TextCounter C++</a><br>
+ &nbsp; &nbsp; <a href="/textclock_cpp.html">TextClock C++</a><br>
+</td></tr></table><hr size=1 noshade>
+    
+</td><td width=1 class=LeftVertical><img src="/images/dot.gif" width=1 height=1 border=0 alt=""></td><td width=502 valign=top nowrap>
+        <table border=0 cellpadding=0 cellspacing=0 width=502>
+        <form method=POST action="http://www.scriptarchive.com/download.cgi">
+         <tr><td class=pSectionTitle><b class=DetailHeader>Select Script and File Type</b></td></tr>
+         <tr><td class=DetailTextBox><table border=0><tr><td class=DetailText><b>Script:</b></td><td><select name="s"><option value="total">All Perl Scripts at MSA<option value="dano">Book 'em Dan-O<option value="countdown">Countdown<option value="counter">Counter<option value="ccver">Credit Card Verifier<option value="formmail">FormMail<option value="links">Free For All Links<option value="guestbook">Guestbook<option value="cookielib">HTTP Cookie Library<option value="rand_image">Random Image Displayer<option value="rand_link" selected>Random Link Generator<option value="rand_text">Random Text<option value="ssi_image">SSI Random Image Displayer<option value="search">Simple Search<option value="textclock">TextClock<option value="textclock_cpp">TextClock C++<option value="textcounter">TextCounter<option value="textcounter_cpp">TextCounter C++<option value="wwwboard">WWWBoard</select></td></tr><tr><td class=DetailText><b>Compression:&nbsp;</b></td><td><select name="c"><option value="zip">Zipped (Unix/PC/Mac) .zip<option value="tar.gz">Tarred and GZipped (Unix) .tar.gz<option value="tar">Tarred (Unix) .tar</select></td></tr></table></td></tr>
+
+         <tr><td class=pSectionTitle><b class=DetailHeader>Optional Information</b></td></tr>
+         <tr><td class=DetailTextBox>Supplying your e-mail address is completely optional. You can also request to be subscribed to the new-scripts mailing list, which receives occaisional messages designed to keep you informed of any changes to Matt's Script Archive.<font size=1><br>&nbsp;<br></font>
+<table border=0><tr><td class=DetailText><b>Name:</b></td><td><input type=text name="name" size=30></td></tr>
+<tr><td class=DetailText><b>E-Mail:</b></td><td><input type=text name="email" size=30></td></tr>
+<tr><td colspan=2><table border=0 cellpadding=0 cellspacing=0><tr><td><input type=checkbox name="list" value="new-scripts"></td><td>&nbsp;I wish to receive updates about Matt's Script Archive!</td></tr></table></td></tr></table></td></tr>
+        </table><br>
+
+        <center><input type=submit value="Download Selected File"></center></form>
+        <table border=0 cellpadding=0 cellspacing=0 width=502>
+         <tr><td class=pSectionTitle><b class=DetailHeader>BROWSER NOTE:</b></td></tr>
+         <tr><td class=DetailTextBox>If your browser attempts to name the downloaded file <b>download.cgi</b> you should save it to disk and then rename it with the appropriate extension.  This bug has been reported in various browsers, including IE for Mac OS X.<br><br>It is not very important what the filename is, as long as the extension corresponds to the correct type, either .zip, .tar.gz or .tar.  The extension is listed in the select box for compression above.  So, if you downloaded FormMail in .zip format and your browser tried to name it download.cgi, you should rename it to something like formmail.zip and try to uncompress it as usual.<br><br>Most people should have no problems downloading the scripts using this form.</td></tr></table><br>
+</td><td width=1 class=RightVertical><img src="/images/dot.gif" width=1 height=1 border=0 alt=""></td><td width=168 colspan=2 valign=top bgcolor=#DBE5EC class=DescriptionText>&nbsp;<br><br><div style="padding-left: 8px;"><a href="http://www.formmail.com/" class=ExternLink><img src="/MercuryAd/upload/fm/fm_120x600C.png" alt="FormMail.com :: HTML Form to Email Processor" width="120" height="600" border="0"></a></div></td><td width=100% bgcolor=#DBE5EC class=SmallestText><img src="/images/dot.gif" width=1 height=1 border=0 alt=""></td></tr></table>
+
+  <table border=0 cellpadding=0 cellspacing=0 width=100%>
+   <tr><td class=LocationText><table border=0 cellpadding=1 cellspacing=0 width=798><tr><td align=right class=DescriptionText>[ <a href="/images/" class=BottomLink>Linking to MSA</a> | <a href="/ads/" class=BottomLink>Advertising Opportunities</a> | <a href="/contact/" class=BottomLink>Contact Matt</a> ]</td></tr></table></td></tr>
+   <tr bgcolor=#DBE5EC><td><table border=0 cellpadding=1 cellspacing=0 width=798 height=30><tr><td width=300 align=right></td><td align=right valign=top class=DescriptionText>&copy; 1995 - 2009 <a href="http://www.mattwright.com">Matt Wright</a> and Matt's Script Archive, Inc.</td></tr></table></td></tr>
+  </table>
+ </body>
+</html>
